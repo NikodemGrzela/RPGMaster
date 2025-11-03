@@ -99,7 +99,7 @@ flutter:
   # see https://flutter.dev/to/font-from-package
   fonts:
     # Unical Antiqua dla logo
-    - family: Uncial Antiqua
+    - family: UncialAntiqua
       fonts:
         - asset: assets/fonts/unical_antiqua/UncialAntiqua-Regular.ttf
 

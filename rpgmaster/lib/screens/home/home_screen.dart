@@ -12,16 +12,61 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Witaj w aplikacji'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => authController.signOut(),
-          )
+          ),
         ],
       ),
       body: Center(
-        child: Text('Zalogowany jako: ${user?.email ?? 'Nieznany'}'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(flex: 2),
+
+            Text(
+              'RPG\nMaster',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                fontFamily: 'UncialAntiqua',
+                fontWeight: FontWeight.w300,
+                height: 1.1,
+              ),
+            ),
+
+            const Spacer(flex: 3),
+
+            // Przycisk Graj
+            FilledButton(
+              onPressed: () {
+                // TODO: Nawigacja do gry
+              },
+              child: const Text('Graj'),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Przycisk Szablony
+            FilledButton(
+              onPressed: () {
+                // TODO: Nawigacja do szablonów
+              },
+              child: const Text('Szablony'),
+            ),
+
+            const Spacer(flex: 2),
+
+            if (user?.email != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 24.0),
+                child: Text(
+                  user!.email!,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
