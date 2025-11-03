@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/rpgmaster/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/rpgmaster/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/rpgmaster/android/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/rpgmaster/build" />
       <excludeFolder url="file://$MODULE_DIR$/rpgmaster/ios/Flutter/ephemeral" />
