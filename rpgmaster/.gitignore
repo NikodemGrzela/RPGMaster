@@ -43,3 +43,28 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android
+rpgmaster/android/.gradle
+rpgmaster/android/captures/
+rpgmaster/android/gradlew
+rpgmaster/android/gradlew.bat
+rpgmaster/android/local.properties
+rpgmaster/android/**/GeneratedPluginRegistrant.java
+
+# iOS
+rpgmaster/ios/**/*.mode1v3
+rpgmaster/ios/**/*.mode2v3
+rpgmaster/ios/**/*.moved-aside
+rpgmaster/ios/**/*.pbxuser
+rpgmaster/ios/**/*.perspectivev3
+rpgmaster/ios/**/*sync/
+rpgmaster/ios/**/.sconsign.dblite
+rpgmaster/ios/**/.tags*
+rpgmaster/ios/**/.vagrant/
+rpgmaster/ios/**/DerivedData/
+rpgmaster/ios/**/Icon?
+rpgmaster/ios/**/Pods/
+
+# IDE
+.vscode/

@@ -2,7 +2,16 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/android/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/build" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/ios/Flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/linux/flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/macos/Flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/rpgmaster/windows/flutter/ephemeral" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
