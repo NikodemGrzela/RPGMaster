@@ -68,3 +68,6 @@ rpgmaster/ios/**/Pods/
 
 # IDE
 .vscode/
+
+# secrets
+rpgmaster/google-services.json
