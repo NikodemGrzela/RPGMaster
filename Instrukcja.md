@@ -45,3 +45,6 @@
     ```commandline
     flutter run
     ```
+   Możesz musieć zrobić wcześniej pub get.
+
+10. dart pub global activate flutterfire_cli
