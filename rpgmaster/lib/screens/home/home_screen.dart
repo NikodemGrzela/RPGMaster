@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
+import '../campaignSelection//campaign_screen.dart';
+import '../templateSelection/template_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -37,20 +39,28 @@ class HomeScreen extends ConsumerWidget {
 
             const Spacer(flex: 3),
 
-            // Przycisk Graj
             FilledButton(
               onPressed: () {
-                // TODO: Nawigacja do gry
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CampaignSelectionScreen(),
+                  ),
+                );
               },
               child: const Text('Graj'),
             ),
 
             const SizedBox(height: 16),
 
-            // Przycisk Szablony
             FilledButton(
               onPressed: () {
-                // TODO: Nawigacja do szablonów
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TemplateSelectionScreen(),
+                  ),
+                );
               },
               child: const Text('Szablony'),
             ),
