@@ -12,6 +12,7 @@ class AppTheme {
     ),
     appBarTheme: const AppBarTheme(centerTitle: true),
     scaffoldBackgroundColor: AppColors.backgroundLight,
+    fontFamily: 'NotoSerif',
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -22,5 +23,6 @@ class AppTheme {
     ),
     appBarTheme: const AppBarTheme(centerTitle: true),
     scaffoldBackgroundColor: AppColors.backgroundDark,
+    fontFamily: 'NotoSerif',
   );
 }

@@ -34,6 +34,7 @@ dependencies:
   firebase_core: ^4.2.1
   firebase_auth: ^6.1.2
   google_sign_in: ^6.1.0
+  flutter_dotenv: ^5.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -68,6 +69,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/google_logo.jpeg
+    - assets/fonts/unical_antiqua/UncialAntiqua-Regular.ttf
+    - assets/fonts/noto_serif/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -94,3 +97,40 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  fonts:
+    # Unical Antiqua dla logo
+    - family: Uncial Antiqua
+      fonts:
+        - asset: assets/fonts/unical_antiqua/UncialAntiqua-Regular.ttf
+
+    # Noto Serif dla tekstu
+    - family: NotoSerif
+      fonts:
+        - asset: assets/fonts/noto_serif/NotoSerif-Regular.ttf
+        - asset: assets/fonts/noto_serif/NotoSerif-Italic.ttf
+          style: italic
+        - asset: assets/fonts/noto_serif/NotoSerif-Light.ttf
+          weight: 300
+        - asset: assets/fonts/noto_serif/NotoSerif-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/noto_serif/NotoSerif-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/noto_serif/NotoSerif-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/noto_serif/NotoSerif-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/noto_serif/NotoSerif-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/noto_serif/NotoSerif-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/noto_serif/NotoSerif-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/noto_serif/NotoSerif-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/noto_serif/NotoSerif-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic

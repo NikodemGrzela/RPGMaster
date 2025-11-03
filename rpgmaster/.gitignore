@@ -71,3 +71,5 @@ rpgmaster/ios/**/Pods/
 
 # secrets
 rpgmaster/google-services.json
+rpgmaster/lib/firebase_options.dart
+.env
