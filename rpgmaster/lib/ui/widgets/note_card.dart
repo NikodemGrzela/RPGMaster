@@ -29,7 +29,7 @@ class _NoteCardState extends State<NoteCard> {
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: colorScheme.surface, // 👈 automatyczny kolor karty
+      color: colorScheme.surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -43,14 +43,10 @@ class _NoteCardState extends State<NoteCard> {
                   children: [
                     Text(
                       widget.title,
-                      style: AppTextStyles.headline.copyWith(
-                        color: colorScheme.onSurface, // 👈 kolor tekstu dynamicznie
-                      ),
                     ),
                     const SizedBox(width: 8),
                     IconButton(
                       icon: const Icon(Icons.edit, size: 18),
-                      color: colorScheme.primary, // 👈 kolor z motywu
                       onPressed: widget.onEdit,
                     ),
                   ],
@@ -60,7 +56,6 @@ class _NoteCardState extends State<NoteCard> {
                     _expanded
                         ? Icons.keyboard_arrow_up
                         : Icons.keyboard_arrow_down,
-                    color: colorScheme.primary,
                   ),
                   onPressed: () => setState(() => _expanded = !_expanded),
                 ),
