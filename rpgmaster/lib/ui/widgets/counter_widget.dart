@@ -50,14 +50,16 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).colorScheme.primary;
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          icon: Icon(Icons.remove),
+          icon: Icon(Icons.remove_circle_outline),
           onPressed: _decrement,
           padding: EdgeInsets.zero,
+          color: primaryColor,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -67,9 +69,10 @@ class _CounterWidgetState extends State<CounterWidget> {
           ),
         ),
         IconButton(
-          icon: Icon(Icons.add),
+          icon: Icon(Icons.add_circle_outline),
           onPressed: _increment,
           padding: EdgeInsets.zero,
+          color: primaryColor,
         ),
       ],
     );
