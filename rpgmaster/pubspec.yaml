@@ -71,6 +71,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/google_logo.jpeg
+    - assets/google.png
     - assets/fonts/unical_antiqua/UncialAntiqua-Regular.ttf
     - assets/fonts/noto_serif/
 

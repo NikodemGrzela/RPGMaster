@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../register/register_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -18,9 +19,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final authController = ref.watch(authControllerProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Logowanie')),
+      appBar: AppBar(
+        title: const Text('Logowanie'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              themeMode == ThemeMode.light ? Icons.dark_mode : Icons.light_mode,
+            ),
+            onPressed: () {
+              ref.read(themeModeProvider.notifier).toggleTheme();
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(52.0),
         child: Column(
@@ -50,7 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(height: 24),
             isLoading
                 ? const CircularProgressIndicator()
-                : ElevatedButton(
+                : FilledButton(
               onPressed: () async {
                 setState(() => isLoading = true);
                 try {
@@ -72,7 +86,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(height: 16),
             FilledButton.icon(
               icon: Image.asset(
-                'assets/google_logo.jpeg',
+                'assets/google.png',
                 height: 24,
               ),
               label: const Text('Zaloguj przez Google'),
@@ -91,7 +105,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
 
             const SizedBox(height: 12),
-            FilledButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,

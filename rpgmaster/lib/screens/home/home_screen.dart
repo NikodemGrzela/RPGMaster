@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
-import '../campaignSelection//campaign_screen.dart';
+import '../../providers/theme_provider.dart';
+import '../campaignSelection/campaign_screen.dart';
 import '../templateSelection/template_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -11,10 +12,19 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authController = ref.watch(authControllerProvider);
     final user = ref.watch(authStateProvider).value;
+    final themeMode = ref.watch(themeModeProvider);
 
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+            icon: Icon(
+              themeMode == ThemeMode.light ? Icons.dark_mode : Icons.light_mode,
+            ),
+            onPressed: () {
+              ref.read(themeModeProvider.notifier).toggleTheme();
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => authController.signOut(),
