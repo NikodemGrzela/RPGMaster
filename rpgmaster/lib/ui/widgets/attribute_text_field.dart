@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import '../theme/app_text_styles.dart';
 
-
-/// Widget with scheme key : value with text fields.
-/// Make [isTemplate] == true if you want to make key settable.
-/// Default: [text] is a key, value is a text field.
-/// Usage: As a character text attribute of given kind.
+/// Widget with scheme key : value.
+///
+/// Modes:
+/// 1. [isTemplate] == true → editable key, value = placeholder.
+/// 2. [isEditable] == true → key from parameters, editable value.
+/// 3. both == false → readonly
 class AttributeTextField extends StatefulWidget {
   final bool isTemplate;
-  final String? text;
-  final ValueChanged<String>? onChanged;
+  final bool isEditable;
+  final String? textKey;
+  final String? textValue;
+  final ValueChanged<String>? onKeyChanged;
+  final ValueChanged<String>? onValueChanged;
 
   const AttributeTextField({
     super.key,
-    required this.isTemplate,
-    this.text,
-    this.onChanged,
+    this.isTemplate = false,
+    this.isEditable = false,
+    this.textKey,
+    this.textValue,
+    this.onKeyChanged,
+    this.onValueChanged,
   });
 
   @override
@@ -22,89 +30,112 @@ class AttributeTextField extends StatefulWidget {
 }
 
 class _AttributeTextFieldState extends State<AttributeTextField> {
-  late TextEditingController _textController;
+  late final TextEditingController _keyController;
+  late final TextEditingController _valueController;
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController(text: widget.text ?? '');
-    _textController.addListener(_onTextChanged);
+    _keyController = TextEditingController(text: widget.textKey ?? '');
+    _valueController = TextEditingController(text: widget.textValue ?? '');
+
+    _keyController.addListener(() {
+      if (widget.isTemplate && widget.onKeyChanged != null) {
+        widget.onKeyChanged!(_keyController.text);
+      }
+    });
+
+    _valueController.addListener(() {
+      if (widget.isEditable && widget.onValueChanged != null) {
+        widget.onValueChanged!(_valueController.text);
+      }
+    });
   }
 
   @override
   void didUpdateWidget(AttributeTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text && widget.text != _textController.text) {
-      _textController.text = widget.text ?? '';
+    if (widget.textKey != oldWidget.textKey &&
+        widget.textKey != _keyController.text) {
+      _keyController.text = widget.textKey ?? '';
     }
-  }
-
-  void _onTextChanged() {
-    if (widget.onChanged != null) {
-      widget.onChanged!(_textController.text);
+    if (widget.textValue != oldWidget.textValue &&
+        widget.textValue != _valueController.text) {
+      _valueController.text = widget.textValue ?? '';
     }
   }
 
   @override
   void dispose() {
-    _textController.dispose();
+    _keyController.dispose();
+    _valueController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
+
+    if (widget.isTemplate) {
+      child = _buildTemplateLayout();
+    } else if (widget.isEditable) {
+      child = _buildEditableLayout();
+    } else {
+      child = _buildReadOnlyLayout();
+    }
+
     return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: widget.isTemplate ? _buildTemplateLayout() : _buildNormalLayout(),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      child: child,
     );
   }
 
+
+  /// Tryb 1: szablon (klucz edytowalny)
   Widget _buildTemplateLayout() {
     return Row(
       children: [
-        // Edytowalne pole - wyrównane do lewej
         Expanded(
           child: TextField(
-            controller: _textController,
+            controller: _keyController,
+            style: AppTextStyles.body,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Wprowadź tekst...',
+              hintText: 'Wprowadź nazwę atrybutu...',
             ),
           ),
         ),
-        const SizedBox(width: 16.0),
-        // Tekst "wartość tekstowa" - wyrównany do prawej
+        const SizedBox(width: 16),
         const Expanded(
           child: Text(
             'wartość tekstowa',
             textAlign: TextAlign.right,
-            style: TextStyle(fontSize: 16.0),
+            style: AppTextStyles.body,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildNormalLayout() {
+  /// Tryb 2: edytowalna wartość
+  Widget _buildEditableLayout() {
     return Row(
       children: [
-        // Tekst z parametrów - wyrównany do lewej
         Expanded(
           child: Text(
-            widget.text ?? 'Brak tekstu',
-            textAlign: TextAlign.left,
-            style: const TextStyle(fontSize: 16.0),
+            widget.textKey ?? 'Brak klucza',
+            style: AppTextStyles.body,
           ),
         ),
-        const SizedBox(width: 16.0),
-        // Edytowalne pole - wyrównane do prawej
+        const SizedBox(width: 16),
         Expanded(
           child: TextField(
-            controller: _textController,
+            controller: _valueController,
+            style: AppTextStyles.body,
             textAlign: TextAlign.right,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Wprowadź tekst...',
+              hintText: 'Wprowadź wartość...',
             ),
           ),
         ),
@@ -112,8 +143,29 @@ class _AttributeTextFieldState extends State<AttributeTextField> {
     );
   }
 
-  // Metoda do uzyskania wartości z zewnątrz
-  String getCurrentValue() {
-    return _textController.text;
+  /// Tryb 3: tylko podgląd
+  Widget _buildReadOnlyLayout() {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            widget.textKey ?? 'Brak klucza',
+            style: AppTextStyles.body,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            widget.textValue ?? 'Brak wartości',
+            textAlign: TextAlign.right,
+            style: AppTextStyles.body,
+          ),
+        ),
+      ],
+    );
   }
+
+  // Metody do uzyskania aktualnych wartości
+  String getCurrentKey() => _keyController.text;
+  String getCurrentValue() => _valueController.text;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './counter_widget.dart';
+import '../theme/app_text_styles.dart';
 
 
 /// Widget with scheme key : value with text fields.
@@ -15,7 +16,7 @@ class AttributeNumberField extends StatefulWidget {
 
   const AttributeNumberField({
     super.key,
-    required this.isTemplate,
+    this.isTemplate = false,
     this.text,
     this.number,
     this.onKeyChanged,
@@ -65,7 +66,7 @@ class _AttributeNumberFieldState extends State<AttributeNumberField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
       child: widget.isTemplate ? _buildTemplateLayout() : _buildNormalLayout(),
     );
   }
@@ -82,13 +83,12 @@ class _AttributeNumberFieldState extends State<AttributeNumberField> {
             ),
           ),
         ),
-        const SizedBox(width: 16.0),
         // Tekst "wartość liczbowa" - wyrównany do prawej
-        const Expanded(
+        Expanded(
           child: Text(
             'wartość liczbowa',
             textAlign: TextAlign.right,
-            style: TextStyle(fontSize: 16.0),
+            style: AppTextStyles.body,
           ),
         ),
       ],
@@ -103,10 +103,9 @@ class _AttributeNumberFieldState extends State<AttributeNumberField> {
           child: Text(
             widget.text ?? 'Brak tekstu',
             textAlign: TextAlign.left,
-            style: const TextStyle(fontSize: 16.0),
+            style: AppTextStyles.body,
           ),
         ),
-        const SizedBox(width: 16.0),
         // Edytowalne pole - wyrównane do prawej
         Expanded(
           child: CounterWidget(
