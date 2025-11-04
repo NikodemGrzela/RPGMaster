@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rpgmaster/ui/theme/app_text_styles.dart';
 
 /// Counter with two buttons (plus and minus) and changeable value.
 class CounterWidget extends StatefulWidget {
@@ -51,6 +52,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
           icon: Icon(Icons.remove),
@@ -61,7 +63,7 @@ class _CounterWidgetState extends State<CounterWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             '$_currentValue',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: AppTextStyles.body,
           ),
         ),
         IconButton(
