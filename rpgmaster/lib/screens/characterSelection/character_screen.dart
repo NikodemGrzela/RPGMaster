@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rpgmaster/ui/widgets/character_selection_button.dart';
+import 'package:rpgmaster/screens/campaignNotes/campaign_notes.dart';
 
 class CharacterSelectionScreen extends ConsumerWidget {
   final String campaignName;
@@ -68,6 +69,13 @@ class CharacterSelectionScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // TODO: Nawigacja do notatek
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CampaignNotesScreen(
+              )
+            ),
+          );
         },
         icon: const Icon(Icons.notes),
         label: const Text('Notatki'),
