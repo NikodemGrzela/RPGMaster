@@ -22,10 +22,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Logowanie')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(52.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'RPG\nMaster',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                fontFamily: 'UncialAntiqua',
+                fontWeight: FontWeight.w300,
+                height: 1.1,
+              ),
+            ),
+
+            const Spacer(flex: 2),
             TextField(
               controller: emailController,
               decoration: const InputDecoration(labelText: 'Email'),
@@ -59,9 +70,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
 
             const SizedBox(height: 16),
-            ElevatedButton.icon(
+            FilledButton.icon(
               icon: Image.asset(
-                'assets/google_logo.jpeg', // dodaj logo Google w assets
+                'assets/google_logo.jpeg',
                 height: 24,
               ),
               label: const Text('Zaloguj przez Google'),
@@ -80,7 +91,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
 
             const SizedBox(height: 12),
-            TextButton(
+            FilledButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -89,6 +100,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               },
               child: const Text('Nie masz konta? Zarejestruj się'),
             ),
+
+            const Spacer(flex: 2),
           ],
         ),
       ),
