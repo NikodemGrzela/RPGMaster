@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../ui/widgets/attribute_text_field.dart';
 
 class CharacterSheetScreen extends StatelessWidget {
   final String characterName;
@@ -40,14 +41,12 @@ class CharacterSheetScreen extends StatelessWidget {
                       (index) => Container(
                     margin: EdgeInsets.only(bottom: 12.0),
                     padding: EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    child: Text(
-                      'Widget numer ${index + 1}',
-                      style: TextStyle(fontSize: 16.0),
+                    child: AttributeTextField(
+                      isTemplate: false,
+                      text: 'Widget nr ${index + 1}',
+                      onChanged: (value) {
+                        print('Wartość zmieniona: $value');
+                      },
                     ),
                   ),
                 ),
