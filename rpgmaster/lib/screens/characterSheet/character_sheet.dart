@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../ui/widgets/attribute_number_field.dart';
+import '../../ui/widgets/dice_roll_dialog.dart';
 
 class CharacterSheetScreen extends StatelessWidget {
   final String characterName;
@@ -92,7 +93,7 @@ class CharacterSheetScreen extends StatelessWidget {
                 Expanded(
                   child: FilledButton(
                     onPressed: () {
-                      // TODO: Nawigacja do rzutu kością
+                      showDiceRollDialog(context);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
