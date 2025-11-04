@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rpgmaster/ui/widgets/selection_button.dart';
+import 'package:rpgmaster/ui/widgets/character_selection_button.dart';
 
 class CharacterSelectionScreen extends ConsumerWidget {
   final String campaignName;
@@ -48,18 +48,14 @@ class CharacterSelectionScreen extends ConsumerWidget {
             Expanded(
               child: ListView(
                 children: [
-                  SelectionButton(
-                    label: 'Frodo',
-                    onPressed: () {
-                      // TODO: Nawigacja do postaci
-                    },
+                  CharacterSelectionButton(
+                    characterName: 'Frodo',
+                    campaignName: campaignName,
                   ),
                   const SizedBox(height: 12),
-                  SelectionButton(
-                    label: 'Postać 2',
-                    onPressed: () {
-                      // TODO: Nawigacja do postaci
-                    },
+                  CharacterSelectionButton(
+                    characterName: 'Gandalf',
+                    campaignName: campaignName,
                   ),
                 ],
               ),
