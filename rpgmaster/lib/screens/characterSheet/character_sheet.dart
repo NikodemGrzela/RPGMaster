@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../ui/theme/app_text_styles.dart';
 import '../../ui/widgets/attribute_number_field.dart';
+import '../../ui/widgets/attribute_text_field.dart';
 import '../../ui/widgets/dice_roll_dialog.dart';
+import '../../ui/widgets/widget_card.dart';
+import '../campaignNotes/campaign_notes.dart';
 
 class CharacterSheetScreen extends StatelessWidget {
   final String characterName;
@@ -20,7 +24,10 @@ class CharacterSheetScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(characterName),
+        title: Text(
+            characterName,
+            style: AppTextStyles.title
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -37,24 +44,59 @@ class CharacterSheetScreen extends StatelessWidget {
             child: SingleChildScrollView(
               padding: EdgeInsets.all(16.0),
               child: Column(
-                children: List.generate(
-                  20, // Przykładowa liczba widgetów
-                      (index) => Container(
-                    margin: EdgeInsets.only(bottom: 12.0),
-                    padding: EdgeInsets.all(16.0),
-                    child: AttributeNumberField(
-                      isTemplate: true,
-                      text: 'Widget nr ${index + 1}',
-                      number: 5,
-                      onKeyChanged: (value) {
-                        print('Wartość zmieniona: $value');
-                      },
+                children: [
+
+                  WidgetCard(
+                    title: 'Cechy',
+                    initialWidgets: [
+                      AttributeTextField(
+                        textKey: 'Nazwa:',
+                        textValue: 'Frodo',
+                        isEditable: false,
+                        isTemplate: false,
+                      ),
+                      AttributeTextField(
+                        textKey: 'Rasa:',
+                        textValue: 'Hobbit',
+                        isEditable: false,
+                        isTemplate: false,
+                      ),
+                    ],
+                    onAddWidget: () => AttributeTextField(
+                      textKey: 'Atrybut:',
+                      textValue: 'Nazwa',
+                      isEditable: true,
+                      isTemplate: false,
+                    ),
+                  ),
+
+                  WidgetCard(
+                    title: 'Statystyki',
+                    initialWidgets: [
+                      AttributeNumberField(
+                        text: 'Siła',
+                        number: 5,
+                        onValueChanged: (value) {
+                          print('AttributeNumberField value: $value');
+                        },
+                      ),
+                      AttributeNumberField(
+                        text: 'Rozum',
+                        number: 7,
+                        onValueChanged: (value) {
+                          print('AttributeNumberField value: $value');
+                        },
+                      ),
+                    ],
+                    onAddWidget: () => AttributeNumberField(
+                      text: 'Statystyka',
+                      number: 0,
                       onValueChanged: (value) {
-                        print('Wartość zmieniona: $value');
+                        print('AttributeNumberField value: $value');
                       },
                     ),
                   ),
-                ),
+                ]
               ),
             ),
           ),
@@ -63,7 +105,6 @@ class CharacterSheetScreen extends StatelessWidget {
           Divider(
             height: 1.0,
             thickness: 1.0,
-            color: Colors.grey.shade400,
           ),
 
           // Sekcja z przyciskami
@@ -75,7 +116,13 @@ class CharacterSheetScreen extends StatelessWidget {
                 Expanded(
                   child: FilledButton(
                     onPressed: () {
-                      // TODO: Nawigacja do notatek
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CampaignNotesScreen(
+                            )
+                        ),
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
