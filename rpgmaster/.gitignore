@@ -70,6 +70,6 @@ rpgmaster/ios/**/Pods/
 .vscode/
 
 # secrets
-rpgmaster/google-services.json
-rpgmaster/lib/firebase_options.dart
 .env
+/lib/firebase_options.dart
+/google-services.json
