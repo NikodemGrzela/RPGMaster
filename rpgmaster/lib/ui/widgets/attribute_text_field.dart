@@ -84,9 +84,15 @@ class _AttributeTextFieldState extends State<AttributeTextField> {
       child = _buildReadOnlyLayout();
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      child: child,
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceContainer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+        child: child,
+      ),
     );
   }
 

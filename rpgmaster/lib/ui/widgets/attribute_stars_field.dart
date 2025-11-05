@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rpgmaster/ui/theme/app_text_styles.dart';
 import 'counter_widget.dart';
 
 class AttributeStarsField extends StatefulWidget {
   final bool isTemplate;
   final bool isEditable;
+  final bool hasCheckbox;
   final String? text;
   final int totalStars;
   final int filledStars;
@@ -16,6 +18,7 @@ class AttributeStarsField extends StatefulWidget {
     super.key,
     this.isTemplate = false,
     this.isEditable = false,
+    this.hasCheckbox = false,
     this.text,
     this.totalStars = 5,
     this.filledStars = 0,
@@ -74,14 +77,14 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
     }
   }
 
-  List<Widget> _buildStars() {
+  List<Widget> _buildStars({bool filled = true}) {
     Color primaryColor = Theme.of(context).colorScheme.primary;
     Color emptyStarColor = Theme.of(context).colorScheme.inversePrimary;
     return List.generate(_totalStars, (index) {
-      bool filled = index < _filledStars;
+      bool isFilled = filled ? index < _filledStars : false;
       return Icon(
         Icons.star,
-        color: filled ? primaryColor : emptyStarColor,
+        color: isFilled ? primaryColor : emptyStarColor,
         size: 24,
       );
     });
@@ -89,9 +92,26 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isTemplate) return _buildTemplateLayout();
-    if (widget.isEditable) return _buildEditableLayout();
-    return _buildReadOnlyLayout();
+    Widget child;
+
+    if (widget.isTemplate) {
+      child = _buildTemplateLayout();
+    } else if (widget.isEditable) {
+      child = _buildEditableLayout();
+    } else {
+      child = _buildReadOnlyLayout();
+    }
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceContainer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+        child: child,
+      ),
+    );
   }
 
   /// Tryb 1 — isTemplate: checkbox + text field + counter (liczba gwiazdek)
@@ -100,16 +120,22 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (widget.hasCheckbox)
+          Row(
+            children: [
+              Checkbox(
+                value: _checked,
+                onChanged: _toggleCheck,
+                activeColor: primaryColor,
+              ),
+            ],
+          ),
         Row(
           children: [
-            Checkbox(
-              value: _checked,
-              onChanged: _toggleCheck,
-              activeColor: primaryColor,
-            ),
             Expanded(
               child: TextField(
                 controller: _textController,
+                style: AppTextStyles.body,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Nazwa atrybutu...',
@@ -130,34 +156,35 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
                 widget.onStarsChanged?.call(value);
               },
             ),
-            Row(children: _buildStars()),
+            Row(children: _buildStars(filled: false)),
           ],
         ),
       ],
     );
   }
 
-  /// Tryb 2 — isEditable: checkbox + tekst + przyciski +/- + WYŚRODKOWANE gwiazdki
+  /// Tryb 2 — isEditable: checkbox + tekst + przyciski +/-
   Widget _buildEditableLayout() {
     Color primaryColor = Theme.of(context).colorScheme.primary;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (widget.hasCheckbox)
+          Row(
+            children: [
+              Checkbox(
+                value: _checked,
+                onChanged: _toggleCheck,
+                activeColor: primaryColor,
+              ),
+            ],
+          ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Checkbox(
-                  value: _checked,
-                  onChanged: _toggleCheck,
-                  activeColor: primaryColor,
-                ),
-                Text(
-                  widget.text ?? 'Brak nazwy',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
+            Text(
+              widget.text ?? 'Brak nazwy',
+              style: AppTextStyles.body,
             ),
             Row(
               children: [
@@ -191,15 +218,16 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
     Color primaryColor = Theme.of(context).colorScheme.primary;
     return Row(
       children: [
-        Checkbox(
-          value: _checked,
-          onChanged: _toggleCheck,
-          activeColor: primaryColor,
-        ),
+        if (widget.hasCheckbox)
+          Checkbox(
+            value: _checked,
+            onChanged: _toggleCheck,
+            activeColor: primaryColor,
+          ),
         Expanded(
           child: Text(
             widget.text ?? 'Brak nazwy',
-            style: const TextStyle(fontSize: 16),
+            style: AppTextStyles.body,
           ),
         ),
         Row(children: _buildStars()),

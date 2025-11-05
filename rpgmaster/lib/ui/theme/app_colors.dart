@@ -14,6 +14,6 @@ class AppColors {
   static const Color info = Color(0xFF2196F3);
 
   // Neutralne odcienie (opcjonalne)
-  static const Color backgroundLight = Color(0xFFFDFCFD);
+  static const Color backgroundLight = Color(0xFFFFFAF2);
   static const Color backgroundDark = Color(0xFF1C1B1F);
 }

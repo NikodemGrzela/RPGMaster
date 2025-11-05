@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rpgmaster/ui/widgets/attribute_stars_field.dart';
+import 'package:rpgmaster/ui/widgets/simple_text_field.dart';
 import '../../ui/theme/app_text_styles.dart';
 import '../../ui/widgets/attribute_number_field.dart';
 import '../../ui/widgets/attribute_text_field.dart';
@@ -100,23 +101,40 @@ class CharacterSheetScreen extends StatelessWidget {
                         text: 'Zwinność',
                         totalStars: 5,
                         filledStars: 3,
-                        initialChecked: true,
+                        onCheckedChanged: (val) => print('Zaznaczone: $val'),
                       ),
                       AttributeStarsField(
-                        isTemplate: true,
-                        totalStars: 0,
-                        onTextChanged: (key) => print('Nowy klucz: $key'),
+                        hasCheckbox: true,
+                        text: 'Spryt',
+                        totalStars: 5,
+                        filledStars: 2,
+                        initialChecked: true,
                         onCheckedChanged: (val) => print('Zaznaczone: $val'),
                       )
                     ],
                     onAddWidget: () => AttributeStarsField(
                       isEditable: true,
-                      text: 'Zwinność',
+                      text: 'Umiejętność',
                       totalStars: 5,
                       filledStars: 2,
                       onStarsChanged: (val) => print('Liczba gwiazdek: $val'),
                     )
+                  ),
 
+                  WidgetCard(
+                    title: 'Przedmioty',
+                    initialWidgets: [
+                      SimpleTextField(
+                        text: 'Magiczny pierścień',
+                      ),
+                      SimpleTextField(
+                        text: 'Chubka i krzesiwo',
+                      ),
+                    ],
+                    onAddWidget: () => SimpleTextField(
+                      text: 'Nowy Przedmiot',
+                      isEditable: true,
+                    ),
                   ),
 
                 ]

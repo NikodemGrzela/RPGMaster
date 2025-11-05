@@ -65,9 +65,15 @@ class _AttributeNumberFieldState extends State<AttributeNumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
-      child: widget.isTemplate ? _buildTemplateLayout() : _buildNormalLayout(),
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceContainer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        child: widget.isTemplate ? _buildTemplateLayout() : _buildNormalLayout(),
+      ),
     );
   }
   Widget _buildTemplateLayout() {

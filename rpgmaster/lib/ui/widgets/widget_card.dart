@@ -59,7 +59,6 @@ class _WidgetCardState extends State<WidgetCard> {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: colorScheme.surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
