@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import '../theme/app_text_styles.dart';
+import 'simple_text_field.dart';
+import 'attribute_text_field.dart';
+import 'attribute_number_field.dart';
+import 'attribute_stars_field.dart';
 
 class WidgetCard extends StatefulWidget {
   final String title;
   final List<Widget> initialWidgets;
-  final VoidCallback? onEdit;
   final Widget Function()? onAddWidget; // opcjonalna "fabryka" nowego widgetu
 
   const WidgetCard({
     super.key,
     required this.title,
     this.initialWidgets = const [],
-    this.onEdit,
     this.onAddWidget,
   });
 
@@ -23,6 +25,9 @@ class _WidgetCardState extends State<WidgetCard> {
   bool _expanded = false;
   bool _isEditing = false;
   late List<Widget> _widgets;
+
+  // Mapy na wartości z widgetów (dla różnych typów)
+  final Map<int, dynamic> _values = {};
 
   @override
   void initState() {
@@ -40,29 +45,47 @@ class _WidgetCardState extends State<WidgetCard> {
     });
   }
 
-  /// Przełącza tryb edycji i aktualizuje wszystkie dzieci
+  /// Przełącza tryb edycji i aktualizuje dzieci
   void _toggleEditMode() {
     setState(() {
       _isEditing = !_isEditing;
 
-      _widgets = _widgets.map((child) {
-        // jeśli widget ma metodę copyWith z parametrem isEditable, zastosuj ją
+      _widgets = List.generate(_widgets.length, (index) {
+        final child = _widgets[index];
+
         try {
-          final dynamic dynWidget = child;
-          final updated = dynWidget.copyWith(isEditable: _isEditing);
-          return updated as Widget;
-        } catch (_) {
-          // jeśli widget nie ma copyWith/isEditable → zwróć bez zmian
+          if (child is SimpleTextField) {
+            return child.copyWith(
+              isEditable: _isEditing,
+              text: _values[index]?.toString() ?? child.text,
+              onChanged: (val) => _values[index] = val,
+            );
+          } else if (child is AttributeTextField) {
+            return child.copyWith(
+              isEditable: _isEditing,
+              textValue: _values[index]?.toString() ?? child.textValue,
+              onValueChanged: (val) => _values[index] = val,
+            );
+          } else if (child is AttributeStarsField) {
+            return child.copyWith(
+              isEditable: _isEditing,
+              filledStars: _values[index] is int ? _values[index] : child.filledStars,
+              onStarsChanged: (val) => _values[index] = val,
+            );
+          } else {
+            return child;
+          }
+        } catch (e) {
+          debugPrint('Nie można zaktualizować widgetu: $e');
           return child;
         }
-      }).toList();
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -79,10 +102,7 @@ class _WidgetCardState extends State<WidgetCard> {
               children: [
                 Row(
                   children: [
-                    Text(
-                      widget.title,
-                      style: AppTextStyles.headline
-                    ),
+                    Text(widget.title, style: AppTextStyles.headline),
                     const SizedBox(width: 8),
                     IconButton(
                       icon: Icon(
@@ -91,7 +111,8 @@ class _WidgetCardState extends State<WidgetCard> {
                         color: _isEditing ? Colors.green : colorScheme.primary,
                       ),
                       onPressed: _toggleEditMode,
-                      tooltip: _isEditing ? 'Zakończ edycję' : 'Edytuj zawartość',
+                      tooltip:
+                      _isEditing ? 'Zakończ edycję' : 'Edytuj zawartość',
                     ),
                   ],
                 ),
@@ -127,7 +148,34 @@ class _WidgetCardState extends State<WidgetCard> {
                 padding: const EdgeInsets.only(top: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _widgets,
+                  children: List.generate(_widgets.length, (index) {
+                    final child = _widgets[index];
+
+                    // Dodaj callbacki jeśli nie były ustawione
+                    if (child is SimpleTextField &&
+                        child.onChanged == null) {
+                      return child.copyWith(
+                        onChanged: (val) => _values[index] = val,
+                      );
+                    } else if (child is AttributeTextField &&
+                        child.onValueChanged == null) {
+                      return child.copyWith(
+                        onValueChanged: (val) => _values[index] = val,
+                      );
+                    } else if (child is AttributeNumberField &&
+                        child.onValueChanged == null) {
+                      return child.copyWith(
+                        onValueChanged: (val) => _values[index] = val,
+                      );
+                    } else if (child is AttributeStarsField &&
+                        child.onStarsChanged == null) {
+                      return child.copyWith(
+                        onStarsChanged: (val) => _values[index] = val,
+                      );
+                    }
+
+                    return child;
+                  }),
                 ),
               ),
               secondChild: const SizedBox.shrink(),
