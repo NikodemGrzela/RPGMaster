@@ -21,6 +21,7 @@ class WidgetCard extends StatefulWidget {
 
 class _WidgetCardState extends State<WidgetCard> {
   bool _expanded = false;
+  bool _isEditing = false;
   late List<Widget> _widgets;
 
   @override
@@ -29,24 +30,32 @@ class _WidgetCardState extends State<WidgetCard> {
     _widgets = List.from(widget.initialWidgets);
   }
 
+  /// Dodaje nowy widget
   void _addNewWidget() {
+    if (!_isEditing) return;
     setState(() {
       if (widget.onAddWidget != null) {
         _widgets.add(widget.onAddWidget!());
-      } else {
-        // domyślny widget, jeśli nie zdefiniowano fabryki
-        _widgets.add(
-          Container(
-            padding: const EdgeInsets.all(8),
-            margin: const EdgeInsets.symmetric(vertical: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey.shade200,
-            ),
-            child: const Text("Nowy widget"),
-          ),
-        );
       }
+    });
+  }
+
+  /// Przełącza tryb edycji i aktualizuje wszystkie dzieci
+  void _toggleEditMode() {
+    setState(() {
+      _isEditing = !_isEditing;
+
+      _widgets = _widgets.map((child) {
+        // jeśli widget ma metodę copyWith z parametrem isEditable, zastosuj ją
+        try {
+          final dynamic dynWidget = child;
+          final updated = dynWidget.copyWith(isEditable: _isEditing);
+          return updated as Widget;
+        } catch (_) {
+          // jeśli widget nie ma copyWith/isEditable → zwróć bez zmian
+          return child;
+        }
+      }).toList();
     });
   }
 
@@ -76,20 +85,25 @@ class _WidgetCardState extends State<WidgetCard> {
                     ),
                     const SizedBox(width: 8),
                     IconButton(
-                      icon: const Icon(Icons.edit, size: 18),
-                      color: colorScheme.primary,
-                      onPressed: widget.onEdit,
+                      icon: Icon(
+                        _isEditing ? Icons.check : Icons.edit,
+                        size: 20,
+                        color: _isEditing ? Colors.green : colorScheme.primary,
+                      ),
+                      onPressed: _toggleEditMode,
+                      tooltip: _isEditing ? 'Zakończ edycję' : 'Edytuj zawartość',
                     ),
                   ],
                 ),
                 Row(
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.add_circle_outline),
-                      color: colorScheme.primary,
-                      tooltip: "Dodaj nowy widget",
-                      onPressed: _addNewWidget,
-                    ),
+                    if (_isEditing)
+                      IconButton(
+                        icon: const Icon(Icons.add_circle_outline),
+                        color: colorScheme.primary,
+                        tooltip: "Dodaj nowy widget",
+                        onPressed: _addNewWidget,
+                      ),
                     IconButton(
                       icon: Icon(
                         _expanded
