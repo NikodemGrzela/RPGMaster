@@ -28,6 +28,31 @@ class AttributeStarsField extends StatefulWidget {
     this.onStarsChanged,
   });
 
+  AttributeStarsField copyWith({
+    bool? isTemplate,
+    bool? isEditable,
+    bool? hasCheckbox,
+    String? text,
+    int? totalStars,
+    int? filledStars,
+    ValueChanged<bool>? onCheckedChanged,
+    ValueChanged<String>? onTextChanged,
+    ValueChanged<int>? onStarsChanged,
+  }){
+    return AttributeStarsField(
+      key: key,
+      isTemplate: isTemplate ?? this.isTemplate,
+      isEditable: isEditable ?? this.isEditable,
+      hasCheckbox: hasCheckbox ?? this.hasCheckbox,
+      text: text ?? this.text,
+      totalStars: totalStars ?? this.totalStars,
+      filledStars: filledStars ?? this.filledStars,
+      onCheckedChanged: onCheckedChanged ?? this.onCheckedChanged,
+      onTextChanged: onTextChanged ?? this.onTextChanged,
+      onStarsChanged: onStarsChanged ?? this.onStarsChanged,
+    );
+  }
+
   @override
   State<AttributeStarsField> createState() => _AttributeStarsFieldState();
 }
@@ -102,13 +127,18 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
       child = _buildReadOnlyLayout();
     }
 
+    double verticalPadding = 12.0;
+    if (widget.hasCheckbox) {
+      verticalPadding = 0.0;
+    }
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       elevation: 0,
       color: Theme.of(context).colorScheme.surfaceContainer,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+        padding: EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 8.0),
         child: child,
       ),
     );
@@ -169,19 +199,15 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.hasCheckbox)
-          Row(
-            children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (widget.hasCheckbox)
               Checkbox(
                 value: _checked,
                 onChanged: _toggleCheck,
                 activeColor: primaryColor,
               ),
-            ],
-          ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
             Text(
               widget.text ?? 'Brak nazwy',
               style: AppTextStyles.body,

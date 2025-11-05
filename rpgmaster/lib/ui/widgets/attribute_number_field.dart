@@ -23,6 +23,23 @@ class AttributeNumberField extends StatefulWidget {
     this.onValueChanged,
   });
 
+  AttributeNumberField copyWith({
+    bool? isTemplate,
+    String? text,
+    int? number,
+    ValueChanged<String>? onKeyChanged,
+    ValueChanged<int>? onValueChanged,
+  }){
+    return AttributeNumberField(
+      key: key,
+      isTemplate: isTemplate ?? this.isTemplate,
+      text: text ?? this.text,
+      number: number ?? this.number,
+      onKeyChanged: onKeyChanged ?? this.onKeyChanged,
+      onValueChanged: onValueChanged ?? this.onValueChanged,
+    );
+  }
+
   @override
   _AttributeNumberFieldState createState() => _AttributeNumberFieldState();
 }

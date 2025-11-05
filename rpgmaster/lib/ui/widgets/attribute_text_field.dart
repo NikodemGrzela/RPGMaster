@@ -25,6 +25,25 @@ class AttributeTextField extends StatefulWidget {
     this.onValueChanged,
   });
 
+  AttributeTextField copyWith({
+    bool? isTemplate,
+    bool? isEditable,
+    String? textKey,
+    String? textValue,
+    ValueChanged<String>? onKeyChanged,
+    ValueChanged<String>? onValueChanged,
+  }){
+    return AttributeTextField(
+      key: key,
+      isTemplate: isTemplate ?? this.isTemplate,
+      isEditable: isEditable ?? this.isEditable,
+      textKey: textKey ?? this.textKey,
+      textValue: textValue ?? this.textValue,
+      onKeyChanged: onKeyChanged ?? this.onKeyChanged,
+      onValueChanged: onValueChanged ?? this.onValueChanged,
+    );
+  }
+
   @override
   _AttributeTextFieldState createState() => _AttributeTextFieldState();
 }

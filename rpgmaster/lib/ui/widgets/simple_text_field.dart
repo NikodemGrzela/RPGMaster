@@ -18,6 +18,19 @@ class SimpleTextField extends StatefulWidget {
     this.onChanged,
   });
 
+  SimpleTextField copyWith({
+    bool? isEditable,
+    String? text,
+    ValueChanged<String>? onChanged,
+  }) {
+    return SimpleTextField(
+      key: key,
+      isEditable: isEditable ?? this.isEditable,
+      text: text ?? this.text,
+      onChanged: onChanged ?? this.onChanged,
+    );
+  }
+
   @override
   State<SimpleTextField> createState() => _SimpleTextFieldState();
 }
@@ -58,6 +71,7 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
       color: Theme.of(context).colorScheme.surfaceContainer,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
         child: widget.isEditable
             ? _buildEditableLayout()
@@ -84,7 +98,6 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
     return Text(
       widget.text ?? 'Brak tekstu',
       style: AppTextStyles.body,
-      textAlign: TextAlign.center,
     );
   }
 
