@@ -54,14 +54,10 @@ class CharacterSheetScreen extends StatelessWidget {
                       AttributeTextField(
                         textKey: 'Nazwa:',
                         textValue: 'Frodo',
-                        isEditable: false,
-                        isTemplate: false,
                       ),
                       AttributeTextField(
                         textKey: 'Rasa:',
                         textValue: 'Hobbit',
-                        isEditable: false,
-                        isTemplate: false,
                       ),
                     ],
                     onAddWidget: () => AttributeTextField(
@@ -144,13 +140,14 @@ class CharacterSheetScreen extends StatelessWidget {
 
           // Divider oddzielający
           Divider(
-            height: 1.0,
-            thickness: 1.0,
+            height: 0.0,
+            thickness: 2.0,
           ),
 
           // Sekcja z przyciskami
           Container(
             padding: EdgeInsets.all(16.0),
+            color: Theme.of(context).colorScheme.surfaceContainerHigh,
             child: Row(
               children: [
 
