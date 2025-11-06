@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rpgmaster/ui/widgets/selection_button.dart';
+import '../templateCreator/template_name_screen.dart';
 
 class TemplateSelectionScreen extends ConsumerWidget {
   const TemplateSelectionScreen({super.key});
@@ -16,7 +17,12 @@ class TemplateSelectionScreen extends ConsumerWidget {
         actions: [
           TextButton.icon(
             onPressed: () {
-              // TODO: nowy szablon
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TemplateNameScreen(),
+                ),
+              );
             },
             icon: const Icon(Icons.add),
             label: const Text('Dodaj Szablon'),

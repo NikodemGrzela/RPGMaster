@@ -18,7 +18,7 @@ class NoteCard extends StatefulWidget {
 }
 
 class _NoteCardState extends State<NoteCard> {
-  bool _expanded = false;
+  bool _expanded = true;
 
   @override
   Widget build(BuildContext context) {

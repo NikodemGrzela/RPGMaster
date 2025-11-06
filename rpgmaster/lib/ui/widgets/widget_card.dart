@@ -9,12 +9,14 @@ class WidgetCard extends StatefulWidget {
   final String title;
   final List<Widget> initialWidgets;
   final Widget Function()? onAddWidget; // opcjonalna "fabryka" nowego widgetu
+  final bool initiallyExpanded;
 
   const WidgetCard({
     super.key,
     required this.title,
     this.initialWidgets = const [],
     this.onAddWidget,
+    this.initiallyExpanded = true,
   });
 
   @override
@@ -33,6 +35,7 @@ class _WidgetCardState extends State<WidgetCard> {
   void initState() {
     super.initState();
     _widgets = List.from(widget.initialWidgets);
+    _expanded = widget.initiallyExpanded;
   }
 
   /// Dodaje nowy widget

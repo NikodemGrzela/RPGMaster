@@ -4,12 +4,16 @@ import 'package:rpgmaster/ui/theme/app_text_styles.dart';
 /// Counter with two buttons (plus and minus) and changeable value.
 class CounterWidget extends StatefulWidget {
   final int initialValue;
+  final int? minValue;
+  final int? maxValue;
   final ValueChanged<int>? onChanged;
 
-  /// Konstruktor - przyjmuje wartość początkową
+  /// Konstruktor - przyjmuje wartość początkową oraz opcjonalne min/max
   const CounterWidget({
     super.key,
     this.initialValue = 0,
+    this.minValue,
+    this.maxValue,
     this.onChanged,
   });
 
@@ -36,30 +40,48 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   void _increment() {
     setState(() {
-      _updateValue(_currentValue + 1);
+      int newValue = _currentValue + 1;
+      // Sprawdź czy nie przekracza maxValue
+      if (widget.maxValue != null && newValue > widget.maxValue!) {
+        return;
+      }
+      _updateValue(newValue);
     });
   }
 
   void _decrement() {
     setState(() {
-      if (_currentValue > 0) {
-        _updateValue(_currentValue - 1);
+      int newValue = _currentValue - 1;
+      // Sprawdź czy nie spada poniżej minValue (domyślnie 0)
+      int minLimit = widget.minValue ?? 0;
+      if (newValue < minLimit) {
+        return;
       }
+      _updateValue(newValue);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     Color primaryColor = Theme.of(context).colorScheme.primary;
+
+    // Sprawdź czy przyciski powinny być aktywne
+    bool canDecrement = widget.minValue == null
+        ? _currentValue > 0
+        : _currentValue > widget.minValue!;
+    bool canIncrement = widget.maxValue == null
+        ? true
+        : _currentValue < widget.maxValue!;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
           icon: Icon(Icons.remove_circle_outline),
-          onPressed: _decrement,
+          onPressed: canDecrement ? _decrement : null,
           padding: EdgeInsets.zero,
-          color: primaryColor,
+          color: canDecrement ? primaryColor : primaryColor.withOpacity(0.3),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -70,9 +92,9 @@ class _CounterWidgetState extends State<CounterWidget> {
         ),
         IconButton(
           icon: Icon(Icons.add_circle_outline),
-          onPressed: _increment,
+          onPressed: canIncrement ? _increment : null,
           padding: EdgeInsets.zero,
-          color: primaryColor,
+          color: canIncrement ? primaryColor : primaryColor.withOpacity(0.3),
         ),
       ],
     );
