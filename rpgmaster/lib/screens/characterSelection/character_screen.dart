@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rpgmaster/screens/characterCreator/character_creator_screen.dart';
 import 'package:rpgmaster/ui/widgets/character_selection_button.dart';
 import 'package:rpgmaster/screens/campaignNotes/campaign_notes.dart';
+import 'package:rpgmaster/providers/character_provider.dart';
 
 class CharacterSelectionScreen extends ConsumerWidget {
   final String campaignName;
+  final String campaignId;
 
   const CharacterSelectionScreen({
     super.key,
+    required this.campaignId,
     required this.campaignName,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final charactersAsync = ref.watch(charactersForCampaignProvider(campaignId));
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -22,7 +28,15 @@ class CharacterSelectionScreen extends ConsumerWidget {
         actions: [
           TextButton.icon(
             onPressed: () {
-              //TODO: nowa postać
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CharacterCreatorScreen(
+                    campaignId:  campaignId,
+                    campaignName: campaignName,
+                  ),
+                ),
+              );
             },
             icon: const Icon(Icons.add),
             label: const Text('Dodaj Postać'),
@@ -47,18 +61,36 @@ class CharacterSelectionScreen extends ConsumerWidget {
             const SizedBox(height: 48),
 
             Expanded(
-              child: ListView(
-                children: [
-                  CharacterSelectionButton(
-                    characterName: 'Frodo',
-                    campaignName: campaignName,
-                  ),
-                  const SizedBox(height: 12),
-                  CharacterSelectionButton(
-                    characterName: 'Gandalf',
-                    campaignName: campaignName,
-                  ),
-                ],
+              child: charactersAsync.when(
+                data: (characters) {
+                  if (characters.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        'Brak postaci w tej kampanii.\nDodaj pierwszą!',
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+
+                  return ListView.separated(
+                    itemCount: characters.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final character = characters[index];
+
+                      return CharacterSelectionButton(
+                        campaignId:  campaignId,
+                        characterId: character.id,
+                        characterName: character.characterName,
+                        campaignName: campaignName,
+                      );
+                    },
+                  );
+                },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (e, _) => Center(
+                  child: Text('Błąd ładowania: $e'),
+                ),
               ),
             ),
 
@@ -73,6 +105,7 @@ class CharacterSelectionScreen extends ConsumerWidget {
             context,
             MaterialPageRoute(
               builder: (context) => CampaignNotesScreen(
+                campaignId: campaignId,
               )
             ),
           );

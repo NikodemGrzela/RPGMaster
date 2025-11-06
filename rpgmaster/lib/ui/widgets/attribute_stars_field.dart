@@ -128,7 +128,7 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
     }
 
     double verticalPadding = 12.0;
-    if (widget.hasCheckbox) {
+    if (widget.hasCheckbox && (widget.isEditable || !widget.isTemplate)) {
       verticalPadding = 0.0;
     }
 
@@ -150,18 +150,14 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.hasCheckbox)
-          Row(
-            children: [
+        Row(
+          children: [
+            if (widget.hasCheckbox)
               Checkbox(
                 value: _checked,
                 onChanged: _toggleCheck,
                 activeColor: primaryColor,
               ),
-            ],
-          ),
-        Row(
-          children: [
             Expanded(
               child: TextField(
                 controller: _textController,
@@ -181,8 +177,16 @@ class _AttributeStarsFieldState extends State<AttributeStarsField> {
           children: [
             CounterWidget(
               initialValue: _totalStars,
+              minValue: 1,
+              maxValue: 8,
               onChanged: (value) {
-                setState(() => _totalStars = value);
+                setState(() {
+                  _totalStars = value;
+                  // Jeśli wypełnionych gwiazdek jest więcej niż nowy total, ogranicz
+                  if (_filledStars > _totalStars) {
+                    _filledStars = _totalStars;
+                  }
+                });
                 widget.onStarsChanged?.call(value);
               },
             ),

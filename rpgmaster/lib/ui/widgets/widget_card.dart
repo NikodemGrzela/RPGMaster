@@ -9,12 +9,17 @@ class WidgetCard extends StatefulWidget {
   final String title;
   final List<Widget> initialWidgets;
   final Widget Function()? onAddWidget; // opcjonalna "fabryka" nowego widgetu
+  final bool initiallyExpanded;
+
+  final void Function(Map<int, dynamic> values)? onSave;
 
   const WidgetCard({
     super.key,
     required this.title,
     this.initialWidgets = const [],
     this.onAddWidget,
+    this.initiallyExpanded = true,
+    this.onSave,
   });
 
   @override
@@ -33,6 +38,7 @@ class _WidgetCardState extends State<WidgetCard> {
   void initState() {
     super.initState();
     _widgets = List.from(widget.initialWidgets);
+    _expanded = widget.initiallyExpanded;
   }
 
   /// Dodaje nowy widget
@@ -47,6 +53,8 @@ class _WidgetCardState extends State<WidgetCard> {
 
   /// Przełącza tryb edycji i aktualizuje dzieci
   void _toggleEditMode() {
+    final bool wasEditing = _isEditing;
+
     setState(() {
       _isEditing = !_isEditing;
 
@@ -72,6 +80,14 @@ class _WidgetCardState extends State<WidgetCard> {
               filledStars: _values[index] is int ? _values[index] : child.filledStars,
               onStarsChanged: (val) => _values[index] = val,
             );
+          } else if (child is AttributeNumberField) {
+            return child.copyWith(
+              isEditable: _isEditing,
+              number: _values[index] is int
+                  ? _values[index]
+                  : child.number,
+              onValueChanged: (val) => _values[index] = val,
+            );
           } else {
             return child;
           }
@@ -81,6 +97,10 @@ class _WidgetCardState extends State<WidgetCard> {
         }
       });
     });
+
+    if (wasEditing && !_isEditing && widget.onSave != null) {
+      widget.onSave!(Map<int, dynamic>.from(_values));
+    }
   }
 
   @override

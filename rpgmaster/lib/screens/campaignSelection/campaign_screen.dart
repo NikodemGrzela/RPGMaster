@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rpgmaster/models/campaign_model.dart';
+import 'package:rpgmaster/providers/campaign_provider.dart';
+import 'package:rpgmaster/screens/campaignCreator/campaign_creator_screen.dart';
 import 'package:rpgmaster/ui/widgets/selection_button.dart';
 import 'package:rpgmaster/screens/characterSelection/character_screen.dart';
 
@@ -8,6 +11,8 @@ class CampaignSelectionScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final campaignsAsync = ref.watch(userCampaignsProvider);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -17,7 +22,12 @@ class CampaignSelectionScreen extends ConsumerWidget {
         actions: [
           TextButton.icon(
             onPressed: () {
-              // TODO: nowa kampania
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const CampaignCreatorScreen(),
+                ),
+              );
             },
             icon: const Icon(Icons.add),
             label: const Text('Dodaj Kampanię'),
@@ -36,29 +46,40 @@ class CampaignSelectionScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 48),
             Expanded(
-              child: ListView(
-                children: [
-                  SelectionButton(
-                    label: 'Kampania 1',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CharacterSelectionScreen(
-                            campaignName: 'Kampania 1',
-                          ),
-                        ),
+              child: campaignsAsync.when(
+                data: (List<Campaign> campaigns) {
+                  if (campaigns.isEmpty) {
+                    return const Center(
+                      child: Text('Brak kampanii.'),
+                    );
+                  }
+
+                  return ListView.separated(
+                    itemCount: campaigns.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final campaign = campaigns[index];
+
+                      return SelectionButton(
+                        label: campaign.title,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CharacterSelectionScreen(
+                                campaignName: campaign.title,
+                                campaignId: campaign.id,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
-                  ),
-                  const SizedBox(height: 12),
-                  SelectionButton(
-                    label: 'Kampania 2',
-                    onPressed: () {
-                      // TODO: Nawigacja do kampanii 2
-                    },
-                  ),
-                ],
+                  );
+                },
+                loading: () =>
+                const Center(child: CircularProgressIndicator()),
+                error: (e, _) => Center(child: Text('Błąd: $e')),
               ),
             ),
             const SizedBox(height: 24),

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Campaign {
-  final int id;
+  final String id;
   final String userId;
   final String title;
   final int? tetra;
@@ -24,11 +26,10 @@ class Campaign {
   });
 
   /// Tworzy obiekt Campaign z mapy
-  factory Campaign.fromMap(Map<String, dynamic> data) {
+  factory Campaign.fromDoc(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
     return Campaign(
-      id: data['ID'] is int
-          ? data['ID']
-          : int.tryParse(data['ID'].toString()) ?? 0,
+      id: doc.id,                     // ← NAJWAŻNIEJSZE
       userId: data['userId'] ?? '',
       title: data['Title'] ?? '',
       tetra: _toInt(data['Tetra']),
@@ -44,7 +45,6 @@ class Campaign {
   /// Zamienia obiekt Campaign na mapę
   Map<String, dynamic> toMap() {
     return {
-      'ID': id,
       'userId': userId,
       'Title': title,
       'Tetra': tetra,
@@ -59,7 +59,7 @@ class Campaign {
 
   /// Tworzy nowy obiekt na podstawie istniejącego, nadpisując wybrane pola
   Campaign copyWith({
-    int? id,
+    String? id,
     String? userId,
     String? title,
     int? tetra,

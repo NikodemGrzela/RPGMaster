@@ -5,7 +5,9 @@ import '../../providers/notes_provider.dart';
 import '../../models/note_model.dart';
 
 class CampaignNotesScreen extends ConsumerWidget {
-  const CampaignNotesScreen({super.key});
+  final String campaignId;
+  const CampaignNotesScreen({super.key,
+  required this.campaignId,});
 
   void _editNoteDialog(BuildContext context, WidgetRef ref, NoteModel note) {
     final titleController = TextEditingController(text: note.title);
@@ -16,7 +18,7 @@ class CampaignNotesScreen extends ConsumerWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: colorScheme.surface,
+      backgroundColor: colorScheme.surfaceContainerHigh,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -87,7 +89,7 @@ class CampaignNotesScreen extends ConsumerWidget {
                     );
 
                     if (confirmed == true) {
-                      await ref.read(notesActionsProvider).deleteNote(note.id);
+                      await ref.read(notesActionsProvider(campaignId)).deleteNote(note.id);
                       Navigator.pop(context); // zamknij bottom sheet
                     }
                   },
@@ -107,7 +109,7 @@ class CampaignNotesScreen extends ConsumerWidget {
                   const SizedBox(width: 8),
                   ElevatedButton(
                     onPressed: () async {
-                      await ref.read(notesActionsProvider).editNote(
+                      await ref.read(notesActionsProvider(campaignId)).editNote(
                         note.id,
                         titleController.text.trim(),
                         contentController.text.trim(),
@@ -128,7 +130,7 @@ class CampaignNotesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notesAsync = ref.watch(userNotesProvider);
+    final notesAsync = ref.watch(userNotesProvider(campaignId));
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -167,7 +169,7 @@ class CampaignNotesScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           await ref
-              .read(notesActionsProvider)
+              .read(notesActionsProvider(campaignId))
               .addNote('Nowa notatka', 'Treść...');
         },
         icon: const Icon(Icons.add),
