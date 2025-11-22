@@ -129,8 +129,8 @@ class CharacterSheetScreen extends StatelessWidget {
                         context,
                         characterId,
                         sections,
-                        entry.key,      // index sekcji
-                        entry.value,    // rawSection
+                        entry.key,
+                        entry.value,
                       ),
                     ),
                   ),
@@ -318,7 +318,6 @@ class CharacterSheetScreen extends StatelessWidget {
     required FieldType fieldType,
     required Map<int, dynamic> updatedValues,
   }) async {
-    // skopiuj strukturę, żeby nie modyfikować bezpośrednio oryginalnych referencji
     final sectionsCopy = List<dynamic>.from(allSections);
     final section =
     Map<String, dynamic>.from(sectionsCopy[sectionIndex] as Map<String, dynamic>);
@@ -326,14 +325,14 @@ class CharacterSheetScreen extends StatelessWidget {
     List<dynamic>.from(section['fields'] as List<dynamic>? ?? []);
 
     for (var i = 0; i < fields.length; i++) {
-      if (!updatedValues.containsKey(i)) continue; // brak zmiany
+      if (!updatedValues.containsKey(i)) continue;
 
       final fieldMap = Map<String, dynamic>.from(fields[i] as Map<String, dynamic>);
       final newValue = updatedValues[i];
 
       switch (fieldType) {
         case FieldType.textAttribute:
-          fieldMap['text'] = newValue;            // wartość atrybutu tekstowego
+          fieldMap['text'] = newValue;
           break;
         case FieldType.numberAttribute:
           fieldMap['number'] = newValue is num
@@ -346,7 +345,7 @@ class CharacterSheetScreen extends StatelessWidget {
               : int.tryParse(newValue.toString()) ?? 0;
           break;
         case FieldType.textField:
-          fieldMap['text'] = newValue;            // zawartość pola tekstowego
+          fieldMap['text'] = newValue;
           break;
       }
 

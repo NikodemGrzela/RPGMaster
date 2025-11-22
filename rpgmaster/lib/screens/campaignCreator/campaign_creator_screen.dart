@@ -168,7 +168,7 @@ class _CampaignCreatorScreenState extends State<CampaignCreatorScreen> {
                       const SizedBox(height: 16),
 
                       DiceRow(
-                        label: 'Kość czworościenna (k4)',
+                        label: 'Kość czworościenna (d4)',
                         initialValue: _tetra,
                         onChanged: (value) =>
                             setState(() => _tetra = value),
@@ -176,7 +176,7 @@ class _CampaignCreatorScreenState extends State<CampaignCreatorScreen> {
                       const SizedBox(height: 8),
 
                       DiceRow(
-                        label: 'Kość sześciokątna (k6)',
+                        label: 'Kość sześciokątna (d6)',
                         initialValue: _hexa,
                         onChanged: (value) =>
                             setState(() => _hexa = value),
@@ -184,7 +184,7 @@ class _CampaignCreatorScreenState extends State<CampaignCreatorScreen> {
                       const SizedBox(height: 8),
 
                       DiceRow(
-                        label: 'Kość ośmiościenna (k8)',
+                        label: 'Kość ośmiościenna (d8)',
                         initialValue: _octa,
                         onChanged: (value) =>
                             setState(() => _octa = value),
@@ -192,7 +192,7 @@ class _CampaignCreatorScreenState extends State<CampaignCreatorScreen> {
                       const SizedBox(height: 8),
 
                       DiceRow(
-                        label: 'Kość dziesięciościenna (k10)',
+                        label: 'Kość dziesięciościenna (d10)',
                         initialValue: _deca,
                         onChanged: (value) =>
                             setState(() => _deca = value),
@@ -200,7 +200,7 @@ class _CampaignCreatorScreenState extends State<CampaignCreatorScreen> {
                       const SizedBox(height: 8),
 
                       DiceRow(
-                        label: 'Kość dwunastościenna (k12)',
+                        label: 'Kość dwunastościenna (d12)',
                         initialValue: _dodeca,
                         onChanged: (value) =>
                             setState(() => _dodeca = value),
@@ -208,7 +208,7 @@ class _CampaignCreatorScreenState extends State<CampaignCreatorScreen> {
                       const SizedBox(height: 8),
 
                       DiceRow(
-                        label: 'Kość dwudziestościenna (k20)',
+                        label: 'Kość dwudziestościenna (d20)',
                         initialValue: _icosa,
                         onChanged: (value) =>
                             setState(() => _icosa = value),

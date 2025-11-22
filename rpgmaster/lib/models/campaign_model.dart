@@ -29,7 +29,7 @@ class Campaign {
   factory Campaign.fromDoc(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Campaign(
-      id: doc.id,                     // ← NAJWAŻNIEJSZE
+      id: doc.id,
       userId: data['userId'] ?? '',
       title: data['Title'] ?? '',
       tetra: _toInt(data['Tetra']),

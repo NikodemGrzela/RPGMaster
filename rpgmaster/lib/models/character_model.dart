@@ -88,8 +88,8 @@ class CharacterSectionModel {
 }
 
 class CharacterModel {
-  final String id;           // Firestore doc id
-  final String campaignId;      // 🟢 tu jest powiązanie z kampanią
+  final String id;
+  final String campaignId;
   final String templateId;
   final String characterName;
   final List<CharacterSectionModel> sections;

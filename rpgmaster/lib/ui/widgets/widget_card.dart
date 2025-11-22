@@ -8,7 +8,7 @@ import 'attribute_stars_field.dart';
 class WidgetCard extends StatefulWidget {
   final String title;
   final List<Widget> initialWidgets;
-  final Widget Function()? onAddWidget; // opcjonalna "fabryka" nowego widgetu
+  final Widget Function()? onAddWidget;
   final bool initiallyExpanded;
 
   final void Function(Map<int, dynamic> values)? onSave;
@@ -171,7 +171,6 @@ class _WidgetCardState extends State<WidgetCard> {
                   children: List.generate(_widgets.length, (index) {
                     final child = _widgets[index];
 
-                    // Dodaj callbacki jeśli nie były ustawione
                     if (child is SimpleTextField &&
                         child.onChanged == null) {
                       return child.copyWith(

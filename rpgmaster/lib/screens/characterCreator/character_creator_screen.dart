@@ -31,7 +31,6 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
 
   TemplateModel? _selectedTemplate;
 
-  // dla każdego section -> lista GlobalKey do pól w tej sekcji
   List<List<GlobalKey>> _fieldKeys = [];
 
   bool _isSaving = false;
@@ -93,7 +92,6 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
           final state = key.currentState;
           if (state == null) continue;
 
-          // Używamy dynamic, bo klasy _State są prywatne
           final dyn = state as dynamic;
 
           switch (section.type) {
@@ -289,7 +287,6 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
   /// Krok 2 – edycja atrybutów postaci w oparciu o szablon
   Widget _buildCharacterForm() {
     final template = _selectedTemplate!;
-    // w razie czego odśwież klucze, jeśli coś się rozjechało
     if (_fieldKeys.length != template.sections.length) {
       _prepareFieldsForTemplate(template);
     }
@@ -340,7 +337,7 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
 
     for (int i = 0; i < section.attributes.length; i++) {
       final key = fieldKeys[i];
-      final meta = section.attributes[i]; // 🟢 atrybut z szablonu
+      final meta = section.attributes[i];
       Widget field;
 
       switch (section.type) {
@@ -382,7 +379,7 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
           field = SimpleTextField(
             key: key,
             isEditable: true,
-            text: meta.name, // nazwa z szablonu jako label/placeholder
+            text: meta.name,
           );
           break;
       }

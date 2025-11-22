@@ -112,8 +112,8 @@ class TemplateSelectionScreen extends ConsumerWidget {
                             MaterialPageRoute(
                               builder: (_) => TemplateCreatorScreen(
                                 templateName: name,
-                                templateId: doc.id,              // <── ID dokumentu
-                                initialSectionsData: sectionsData, // <── konfiguracja sekcji
+                                templateId: doc.id,
+                                initialSectionsData: sectionsData,
                               ),
                             ),
                           );
