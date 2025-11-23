@@ -50,6 +50,10 @@ class HomeScreen extends ConsumerWidget {
             const Spacer(flex: 3),
 
             FilledButton(
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                minimumSize: const Size(112, 56),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -64,6 +68,10 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 16),
 
             FilledButton(
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                minimumSize: const Size(112, 56),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,

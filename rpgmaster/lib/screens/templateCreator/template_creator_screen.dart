@@ -100,7 +100,7 @@ class _TemplateCreatorScreenState extends State<TemplateCreatorScreen> {
             Icon(
               Icons.view_module_outlined,
               size: 80,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: 24),
             Text(
@@ -174,7 +174,7 @@ class _TemplateCreatorScreenState extends State<TemplateCreatorScreen> {
         color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black,
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -394,7 +394,7 @@ class _TemplateCreatorScreenState extends State<TemplateCreatorScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          icon: Icon(Icons.check_circle_outline, size: 48, color: Theme.of(context).colorScheme.onPrimary),
+          icon: Icon(Icons.check_circle_outline, size: 48, color: Theme.of(context).colorScheme.primary),
           title: const Text('Szablon zapisany'),
           content: Text(
             'Szablon "${widget.templateName}" z ${_sections.length} ${_sections.length == 1 ? 'sekcją' : 'sekcjami'} został zapisany!',

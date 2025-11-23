@@ -65,6 +65,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             isLoading
                 ? const CircularProgressIndicator()
                 : FilledButton(
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                minimumSize: const Size(112, 56),
+              ),
               onPressed: () async {
                 setState(() => isLoading = true);
                 try {
@@ -89,7 +93,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 'assets/google.png',
                 height: 24,
               ),
-              label: const Text('Zaloguj przez Google'),
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                minimumSize: const Size(112, 56),
+              ),
+              label: const Text('Zaloguj się przez Google'),
               onPressed: () async {
                 setState(() => isLoading = true);
                 try {
@@ -106,6 +114,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
             const SizedBox(height: 12),
             ElevatedButton(
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                minimumSize: const Size(112, 56),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
