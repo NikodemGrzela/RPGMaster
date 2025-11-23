@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rpgmaster/screens/templateCreator/template_creator_screen.dart';
+import 'package:rpgmaster/screens/templateEdit/template_edit_screen.dart';
 import 'package:rpgmaster/ui/widgets/selection_button.dart';
 import '../templateCreator/template_name_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -117,7 +117,7 @@ class TemplateSelectionScreen extends ConsumerWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => TemplateCreatorScreen(
+                                builder: (_) => TemplateEditScreen(
                                   templateName: name,
                                   templateId: doc.id,
                                   initialSectionsData: sectionsData,
