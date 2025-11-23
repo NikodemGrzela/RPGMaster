@@ -42,13 +42,17 @@ class TemplateSelectionScreen extends ConsumerWidget {
 
             // Tytuł
             Text(
-              'Wybierz\nszablon Karty\npostaci',
+              'Wybierz\nszablon \nkarty postaci',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),
 
             const SizedBox(height: 12),
-            Divider(color: Theme.of(context).colorScheme.outlineVariant,),
+            Divider(
+              color: Theme.of(context).colorScheme.outlineVariant,
+              height: 0.0,
+              thickness: 2.0,
+            ),
 
             // Lista szablonów
             Expanded(
@@ -105,22 +109,24 @@ class TemplateSelectionScreen extends ConsumerWidget {
                       (data['sections'] as List<dynamic>? ?? [])
                           .cast<Map<String, dynamic>>();
 
-                      return SelectionButton(
-                        label: name,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => TemplateCreatorScreen(
-                                templateName: name,
-                                templateId: doc.id,
-                                initialSectionsData: sectionsData,
+                      return Padding(
+                        padding: EdgeInsets.only(top: index == 0 ? 12 : 0),
+                        child:SelectionButton(
+                          label: name,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => TemplateCreatorScreen(
+                                  templateName: name,
+                                  templateId: doc.id,
+                                  initialSectionsData: sectionsData,
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        )
                       );
-
                     },
                   );
                 },

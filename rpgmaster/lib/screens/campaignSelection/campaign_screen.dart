@@ -46,7 +46,11 @@ class CampaignSelectionScreen extends ConsumerWidget {
             ),
 
             const SizedBox(height: 12),
-            Divider(color: Theme.of(context).colorScheme.outlineVariant,),
+            Divider(
+              color: Theme.of(context).colorScheme.outlineVariant,
+              height: 0.0,
+              thickness: 2.0,
+            ),
 
             Expanded(
               child: campaignsAsync.when(
@@ -63,19 +67,22 @@ class CampaignSelectionScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final campaign = campaigns[index];
 
-                      return SelectionButton(
+                      return Padding(
+                        padding: EdgeInsets.only(top: index == 0 ? 12 : 0),
+                        child: SelectionButton(
                         label: campaign.title,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CharacterSelectionScreen(
-                                campaignName: campaign.title,
-                                campaignId: campaign.id,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CharacterSelectionScreen(
+                                  campaignName: campaign.title,
+                                  campaignId: campaign.id,
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        )
                       );
                     },
                   );

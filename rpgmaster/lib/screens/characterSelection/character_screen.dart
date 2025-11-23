@@ -59,7 +59,11 @@ class CharacterSelectionScreen extends ConsumerWidget {
             ),
 
             const SizedBox(height: 12),
-            Divider(color: Theme.of(context).colorScheme.outlineVariant,),
+            Divider(
+              color: Theme.of(context).colorScheme.outlineVariant,
+              height: 0.0,
+              thickness: 2.0,
+            ),
 
             Expanded(
               child: charactersAsync.when(
@@ -79,11 +83,14 @@ class CharacterSelectionScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final character = characters[index];
 
-                      return CharacterSelectionButton(
-                        campaignId:  campaignId,
-                        characterId: character.id,
-                        characterName: character.characterName,
-                        campaignName: campaignName,
+                      return Padding(
+                        padding: EdgeInsets.only(top: index == 0 ? 12 : 0),
+                        child: CharacterSelectionButton(
+                          campaignId:  campaignId,
+                          characterId: character.id,
+                          characterName: character.characterName,
+                          campaignName: campaignName,
+                        )
                       );
                     },
                   );
@@ -101,7 +108,6 @@ class CharacterSelectionScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // TODO: Nawigacja do notatek
           Navigator.push(
             context,
             MaterialPageRoute(
