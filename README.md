@@ -15,41 +15,46 @@ Projekt został stworzony z wykorzystaniem technologii **Flutter i Firebase**.
 
 [Zobacz prototyp w Figma](https://www.figma.com/proto/A5WTh8LHV5v5uck69XmdYN/RPG-Master?node-id=1-250&p=f&t=dx4xmqepyMDgSWsy-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A250)
 
-
 ## Struktura projektu
 
-```
+### Główne pliki
 
-lib/
-│
-├── main.dart
-│   Główny punkt wejścia aplikacji. Inicjalizuje Fluttera, ładuje konfigurację Firebase oraz uruchamia główny widget
-│
-├── app.dart
-│   Zawiera globalną konfigurację aplikacji: motywy (jasny/ciemny), routing i nawigację
-│
-├── routes.dart
-│   Definiuje ścieżki między ekranami (routing) i mapuje je na odpowiednie widoki
-│
-├── models/
-│   Modele danych używane w aplikacji (Character, Campaign, Note, Template)
-|   Odpowiadają za strukturę danych pobieranych i zapisywanych w bazie Firestore
-│
-├── providers/
-│   Warstwa zarządzania stanem aplikacji
-|   Zawiera logikę biznesową, reaguje na zmiany danych i aktualizuje interfejs użytkownika
-│
-├── services/
-│   Obsługuje komunikację z zewnętrznymi usługami
-│
-├── screens/
-│   Widoki aplikacji, czyli poszczególne ekrany, np. character_sheet, campaign_screen
-│
-├── ui/
-│   Wspólne komponenty interfejsu użytkownika - widgety takie jak przyciski, karty, pola tekstowe, motywy graficzne
+#### **main.dart**
+
+Punkt startowy aplikacji.
+Odpowiada za inicjalizację Fluttera, konfigurację Firebase oraz uruchomienie głównego widgetu aplikacji.
+
+#### **app.dart**
+
+Zawiera globalną konfigurację aplikacji - motywy (jasny i ciemny), routing oraz ustawienia nawigacji.
+
+#### **routes.dart**
+
+Definiuje wszystkie ścieżki w aplikacji i przypisuje je do odpowiednich ekranów.
 
 
-```
+### Struktura katalogów
+
+#### **models/**
+
+Zawiera modele danych, takie jak Character, Campaign, Note czy Template. Określają one strukturę informacji zapisywanych i pobieranych z bazy Firestore.
+
+#### **providers/**
+
+Odpowiada za zarządzanie stanem aplikacji i logikę biznesową. Zawiera klasy reagujące na zmiany danych i aktualizujące interfejs użytkownika.
+
+#### **services/**
+
+Warstwa komunikacji z zewnętrznymi usługami. Znajduje się tu m.in. obsługa Firestore, autoryzacji oraz innych integracji.
+
+#### **screens/**
+
+Zawiera wszystkie ekrany aplikacji - np. widok arkusza postaci (character_sheet) czy ekran kampanii (campaign_screen).
+
+#### **ui/**
+
+Skupia wspólne komponenty interfejsu użytkownika: przyciski, karty, pola tekstowe, motywy graficzne i inne elementy wielokrotnego użytku.
+
 
 ## Technologie i narzędzia
 
