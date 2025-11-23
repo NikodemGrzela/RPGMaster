@@ -93,14 +93,14 @@ class CharacterSheetScreen extends StatelessWidget {
             characterName,
             style: AppTextStyles.title
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              //TODO: zmiana postaci
-            },
-            icon: const Icon(Icons.swap_horiz),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       //zmiana postaci
+        //     },
+        //     icon: const Icon(Icons.swap_horiz),
+        //   ),
+        // ],
       ),
       body: Column(
             children: [
@@ -111,16 +111,16 @@ class CharacterSheetScreen extends StatelessWidget {
               child: Column(
                 children: [
                   // nagłówek z nazwą kampanii
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Kampania: $campaignName',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 16.0),
+                  //   child: Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       'Kampania: $campaignName',
+                  //       style: Theme.of(context).textTheme.bodyMedium,
+                  //     ),
+                  //   ),
+                  // ),
 
                   ...sections.asMap().entries.map(
                         (entry) => Padding(
