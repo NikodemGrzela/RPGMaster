@@ -213,6 +213,8 @@ class CharacterSheetScreen extends StatelessWidget {
     final typeStr = section['type'] as String? ?? FieldType.textAttribute.name;
     final hasCheckboxes = section['hasCheckboxes'] as bool? ?? false;
     final fields = (section['fields'] as List<dynamic>? ?? []);
+    var isAddable = false;
+    var addWidget = null;
 
     // rozpoznanie typu pola na podstawie stringa zapisanego w Firestore
     FieldType fieldType;
@@ -241,6 +243,15 @@ class CharacterSheetScreen extends StatelessWidget {
                   '',
             ),
           );
+          isAddable = true;
+          addWidget = AttributeTextField(
+            isTemplate: true,
+            isEditable: false,
+            textKey: (field['label'] as String?) ?? '',
+            textValue: (field['text'] as String?) ??
+            (field['value'] as String?) ??
+            '',
+          );
           break;
 
         case FieldType.numberAttribute:
@@ -264,6 +275,15 @@ class CharacterSheetScreen extends StatelessWidget {
               initialChecked: checked,
             ),
           );
+          isAddable = true;
+          addWidget = AttributeNumberField(
+            isTemplate: true,
+            isEditable: false,
+            hasCheckbox: hasCheckboxes,
+            text: label,
+            number: number,
+            initialChecked: checked,
+          );
           break;
 
         case FieldType.starsAttribute:
@@ -278,6 +298,16 @@ class CharacterSheetScreen extends StatelessWidget {
               initialChecked: field['checked'] as bool? ?? false,
             ),
           );
+          isAddable = true;
+          addWidget = AttributeStarsField(
+            isTemplate: true,
+            isEditable: false,
+            hasCheckbox: hasCheckboxes,
+            text: (field['label'] as String?) ?? '',
+            totalStars: (field['totalStars'] as int?) ?? 0,
+            filledStars: (field['filledStars'] as int?) ?? 0,
+            initialChecked: field['checked'] as bool? ?? false,
+          );
           break;
 
         case FieldType.textField:
@@ -288,6 +318,13 @@ class CharacterSheetScreen extends StatelessWidget {
                   (field['value'] as String?) ??
                   '',
             ),
+          );
+          isAddable = true;
+          addWidget = SimpleTextField(
+          isEditable: true,
+            text: (field['text'] as String?) ??
+            (field['value'] as String?) ??
+            '',
           );
           break;
       }
@@ -307,6 +344,8 @@ class CharacterSheetScreen extends StatelessWidget {
           updatedValues: values,
         );
       },
+      isAddable: isAddable,
+      onAddWidget: () => addWidget,
     );
   }
 

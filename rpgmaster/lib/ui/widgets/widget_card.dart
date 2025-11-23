@@ -10,6 +10,7 @@ class WidgetCard extends StatefulWidget {
   final List<Widget> initialWidgets;
   final Widget Function()? onAddWidget;
   final bool initiallyExpanded;
+  final bool isAddable;
 
   final void Function(Map<int, dynamic> values)? onSave;
 
@@ -19,6 +20,7 @@ class WidgetCard extends StatefulWidget {
     this.initialWidgets = const [],
     this.onAddWidget,
     this.initiallyExpanded = true,
+    this.isAddable = false,
     this.onSave,
   });
 
@@ -29,6 +31,7 @@ class WidgetCard extends StatefulWidget {
 class _WidgetCardState extends State<WidgetCard> {
   bool _expanded = false;
   bool _isEditing = false;
+  bool _isAddable = false;
   late List<Widget> _widgets;
 
   // Mapy na wartości z widgetów (dla różnych typów)
@@ -39,6 +42,7 @@ class _WidgetCardState extends State<WidgetCard> {
     super.initState();
     _widgets = List.from(widget.initialWidgets);
     _expanded = widget.initiallyExpanded;
+    _isAddable = widget.isAddable;
   }
 
   /// Dodaje nowy widget
@@ -71,18 +75,21 @@ class _WidgetCardState extends State<WidgetCard> {
           } else if (child is AttributeTextField) {
             return child.copyWith(
               isEditable: _isEditing,
+              isTemplate: false,
               textValue: _values[index]?.toString() ?? child.textValue,
               onValueChanged: (val) => _values[index] = val,
             );
           } else if (child is AttributeStarsField) {
             return child.copyWith(
               isEditable: _isEditing,
+              isTemplate: false,
               filledStars: _values[index] is int ? _values[index] : child.filledStars,
               onStarsChanged: (val) => _values[index] = val,
             );
           } else if (child is AttributeNumberField) {
             return child.copyWith(
               isEditable: _isEditing,
+              isTemplate: false,
               number: _values[index] is int
                   ? _values[index]
                   : child.number,
@@ -138,7 +145,7 @@ class _WidgetCardState extends State<WidgetCard> {
                 ),
                 Row(
                   children: [
-                    if (_isEditing)
+                    if (_isEditing && _isAddable)
                       IconButton(
                         icon: const Icon(Icons.add_circle_outline),
                         color: colorScheme.primary,
