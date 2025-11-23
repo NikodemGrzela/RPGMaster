@@ -13,6 +13,7 @@ class WidgetCard extends StatefulWidget {
   final bool isAddable;
 
   final void Function(Map<int, dynamic> values)? onSave;
+  final void Function(Widget newWidget)? onWidgetAdded;
 
   const WidgetCard({
     super.key,
@@ -22,6 +23,7 @@ class WidgetCard extends StatefulWidget {
     this.initiallyExpanded = true,
     this.isAddable = false,
     this.onSave,
+    this.onWidgetAdded,
   });
 
   @override
@@ -50,7 +52,9 @@ class _WidgetCardState extends State<WidgetCard> {
     if (!_isEditing) return;
     setState(() {
       if (widget.onAddWidget != null) {
-        _widgets.add(widget.onAddWidget!());
+        final newWidget = widget.onAddWidget!();
+        _widgets.add(newWidget);
+        widget.onWidgetAdded?.call(newWidget);
       }
     });
   }

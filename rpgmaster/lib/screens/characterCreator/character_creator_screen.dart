@@ -394,6 +394,59 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
       title: section.name,
       initialWidgets: fieldWidgets,
       initiallyExpanded: true,
+      isAddable: true,
+      onAddWidget: () => _createNewWidget(section.type, sectionIndex),
+      onWidgetAdded: (newWidget) => _onWidgetAdded(sectionIndex, newWidget),
     );
+  }
+
+  Widget _createNewWidget(FieldType fieldType, int sectionIndex) {
+    final newKey = GlobalKey();
+
+    _fieldKeys[sectionIndex].add(newKey);
+
+    switch (fieldType) {
+      case FieldType.textAttribute:
+        return AttributeTextField(
+          key: newKey,
+          isTemplate: false,
+          isEditable: true,
+          textKey: 'Nowy atrybut',
+        );
+
+      case FieldType.numberAttribute:
+        return AttributeNumberField(
+          key: newKey,
+          isTemplate: false,
+          isEditable: true,
+          hasCheckbox: _selectedTemplate!.sections[sectionIndex].hasCheckboxes,
+          text: 'Nowy atrybut',
+          number: 0,
+          initialChecked: false,
+        );
+
+      case FieldType.starsAttribute:
+        return AttributeStarsField(
+          key: newKey,
+          isTemplate: false,
+          isEditable: true,
+          hasCheckbox: _selectedTemplate!.sections[sectionIndex].hasCheckboxes,
+          text: 'Nowa cecha',
+          totalStars: 5,
+          filledStars: 0,
+          initialChecked: false,
+        );
+
+      case FieldType.textField:
+        return SimpleTextField(
+          key: newKey,
+          isEditable: true,
+          text: 'Nowe pole tekstowe',
+        );
+    }
+  }
+
+  void _onWidgetAdded(int sectionIndex, Widget newWidget) {
+    // _saveCharacter();
   }
 }
