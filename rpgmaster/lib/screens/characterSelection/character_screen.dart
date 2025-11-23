@@ -58,7 +58,8 @@ class CharacterSelectionScreen extends ConsumerWidget {
                   .displayMedium,
             ),
 
-            const SizedBox(height: 48),
+            const SizedBox(height: 12),
+            Divider(color: Theme.of(context).colorScheme.outlineVariant,),
 
             Expanded(
               child: charactersAsync.when(

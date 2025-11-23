@@ -44,7 +44,10 @@ class CampaignSelectionScreen extends ConsumerWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displayMedium,
             ),
-            const SizedBox(height: 48),
+
+            const SizedBox(height: 12),
+            Divider(color: Theme.of(context).colorScheme.outlineVariant,),
+
             Expanded(
               child: campaignsAsync.when(
                 data: (List<Campaign> campaigns) {

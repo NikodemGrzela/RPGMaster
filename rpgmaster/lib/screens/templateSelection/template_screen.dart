@@ -47,7 +47,8 @@ class TemplateSelectionScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.displayMedium,
             ),
 
-            const SizedBox(height: 48),
+            const SizedBox(height: 12),
+            Divider(color: Theme.of(context).colorScheme.outlineVariant,),
 
             // Lista szablonów
             Expanded(
