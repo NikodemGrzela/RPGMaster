@@ -30,7 +30,7 @@ Zawiera globalną konfigurację aplikacji - motywy (jasny i ciemny), routing ora
 
 #### **routes.dart**
 
-Definiuje wszystkie ścieżki w aplikacji i przypisuje je do odpowiednich ekranów.
+Definiuje podstawowe ścieżki w aplikacji i przypisuje je do odpowiednich ekranów.
 
 
 ### Struktura katalogów
