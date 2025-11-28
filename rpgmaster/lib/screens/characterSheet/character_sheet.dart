@@ -243,11 +243,13 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
     }
 
     final widgets = <Widget>[];
+    bool isAddable = false;
 
     for (int i = 0; i < fields.length; i++) {
       final rawField = fields[i];
       final field = rawField as Map<String, dynamic>;
       final key = _fieldKeys[sectionIndex]![i];
+
 
       switch (fieldType) {
         case FieldType.textAttribute:
@@ -313,6 +315,7 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
                   '',
             ),
           );
+          isAddable = true;
           break;
       }
     }
@@ -321,7 +324,7 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
       title: title,
       initialWidgets: widgets,
       initiallyExpanded: true,
-      isAddable: true, // Włącz możliwość dodawania nowych widgetów
+      isAddable: isAddable,
       onAddWidget: () => _createNewWidget(fieldType, sectionIndex, hasCheckboxes),
       onWidgetAdded: (newWidget) => _onWidgetAdded(
           context,
@@ -348,7 +351,6 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
   Widget _createNewWidget(FieldType fieldType, int sectionIndex, bool hasCheckboxes) {
     final newKey = GlobalKey();
 
-    // Dodaj nowy klucz do listy
     if (!_fieldKeys.containsKey(sectionIndex)) {
       _fieldKeys[sectionIndex] = [];
     }
@@ -358,7 +360,7 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
       case FieldType.textAttribute:
         return AttributeTextField(
           key: newKey,
-          isTemplate: false,
+          isTemplate: true,
           isEditable: false,
           textKey: 'Nowy atrybut',
           textValue: '',
@@ -367,7 +369,7 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
       case FieldType.numberAttribute:
         return AttributeNumberField(
           key: newKey,
-          isTemplate: false,
+          isTemplate: true,
           isEditable: false,
           hasCheckbox: hasCheckboxes,
           text: 'Nowy atrybut',
@@ -378,7 +380,7 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
       case FieldType.starsAttribute:
         return AttributeStarsField(
           key: newKey,
-          isTemplate: false,
+          isTemplate: true,
           isEditable: false,
           hasCheckbox: hasCheckboxes,
           text: 'Nowa cecha',
@@ -390,7 +392,7 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
       case FieldType.textField:
         return SimpleTextField(
           key: newKey,
-          isEditable: false,
+          isEditable: true,
           text: 'Nowe pole tekstowe',
         );
     }
@@ -516,14 +518,17 @@ class _CharacterSheetScreenState extends State<CharacterSheetScreen> {
 
       switch (fieldType) {
         case FieldType.textAttribute:
+          fieldMap['label'] = newValue;
           fieldMap['value'] = newValue;
           break;
         case FieldType.numberAttribute:
+          fieldMap['label'] = newValue;
           fieldMap['value'] = newValue is num
               ? newValue
               : int.tryParse(newValue.toString()) ?? 0;
           break;
         case FieldType.starsAttribute:
+          fieldMap['label'] = newValue;
           fieldMap['filledStars'] = newValue is num
               ? newValue.toInt()
               : int.tryParse(newValue.toString()) ?? 0;

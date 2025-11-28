@@ -409,18 +409,14 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
       case FieldType.textAttribute:
         return AttributeTextField(
           key: newKey,
-          isTemplate: false,
-          isEditable: true,
-          textKey: 'Nowy atrybut',
+          isTemplate: true,
         );
 
       case FieldType.numberAttribute:
         return AttributeNumberField(
           key: newKey,
-          isTemplate: false,
-          isEditable: true,
+          isTemplate: true,
           hasCheckbox: _selectedTemplate!.sections[sectionIndex].hasCheckboxes,
-          text: 'Nowy atrybut',
           number: 0,
           initialChecked: false,
         );
@@ -428,8 +424,7 @@ class _CharacterCreatorScreenState extends State<CharacterCreatorScreen> {
       case FieldType.starsAttribute:
         return AttributeStarsField(
           key: newKey,
-          isTemplate: false,
-          isEditable: true,
+          isTemplate: true,
           hasCheckbox: _selectedTemplate!.sections[sectionIndex].hasCheckboxes,
           text: 'Nowa cecha',
           totalStars: 5,
